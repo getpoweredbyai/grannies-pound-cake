@@ -142,12 +142,13 @@ style.textContent = `
             top: 70px;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.98);
+            background: var(--navbar-bg);
             flex-direction: column;
             padding: 40px;
             gap: 30px;
             backdrop-filter: blur(20px);
             animation: slideDown 0.3s ease;
+            border-top: 1px solid var(--border-color);
         }
         
         @keyframes slideDown {
@@ -206,8 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeSwitch = document.getElementById('theme-switch');
     const html = document.documentElement;
 
-    // Check for saved theme preference or default to dark
-    const currentTheme = localStorage.getItem('theme') || 'dark';
+    // Check for saved theme preference or default to light
+    const currentTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', currentTheme);
 
     // Update toggle position based on current theme
