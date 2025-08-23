@@ -1,0 +1,364 @@
+<!-- Press Page Section - Powered by UnifiedAI -->
+<style>
+  .press-hero {
+    padding: 60px 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--color-foreground-rgb), 0.03) 0%, rgba(var(--color-foreground-rgb), 0.01) 100%);
+  }
+  
+  .press-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--color-foreground) 0%, rgba(var(--color-foreground-rgb), 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .press-subtitle {
+    font-size: 1.2rem;
+    color: rgba(var(--color-foreground-rgb), 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Store Logos Marquee */
+  .stores-marquee-section {
+    padding: 40px 0;
+    background: rgba(var(--color-foreground-rgb), 0.02);
+    overflow: hidden;
+  }
+  
+  .stores-marquee-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  .stores-marquee {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+  
+  .stores-marquee-content {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    padding: 20px 0;
+  }
+  
+  .stores-marquee:hover .stores-marquee-content {
+    animation-play-state: paused;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .store-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+    min-width: 200px;
+    height: 80px;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .store-logo-item:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  .store-logo-item img {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  .store-logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+  
+  /* Press Articles */
+  .press-articles {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .press-articles h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+  }
+  
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+  
+  .press-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .press-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+  
+  .press-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .press-card-content {
+    padding: 25px;
+  }
+  
+  .press-card-date {
+    font-size: 0.9rem;
+    color: rgba(var(--color-foreground-rgb), 0.6);
+    margin-bottom: 10px;
+  }
+  
+  .press-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  
+  .press-card-excerpt {
+    color: rgba(var(--color-foreground-rgb), 0.8);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .press-card-link {
+    display: inline-block;
+    color: var(--color-foreground);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .press-card-link:hover {
+    transform: translateX(5px);
+  }
+  
+  /* Awards Section */
+  .awards-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(var(--color-foreground-rgb), 0.03) 0%, transparent 100%);
+  }
+  
+  .awards-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .award-item {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+  
+  .award-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+  
+  .award-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .award-year {
+    color: rgba(var(--color-foreground-rgb), 0.6);
+  }
+</style>
+
+<div class="press-hero">
+  <div class="page-width">
+    <h1>Press & Media</h1>
+    <p class="press-subtitle">From a Detroit kitchen to store shelves across Michigan, discover how Grannies Pound Cake is sweetening lives one slice at a time.</p>
+  </div>
+</div>
+
+<!-- Store Logos Marquee -->
+<div class="stores-marquee-section">
+  <h2 class="stores-marquee-title">Available At These Fine Retailers</h2>
+  <div class="stores-marquee">
+    <div class="stores-marquee-content">
+      <!-- First set of logos -->
+      <div class="store-logo-item">
+        <span class="store-logo-text">MEIJER</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Detroit Metro Airport</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Detroit Sip</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Elmer's Hamburgers</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Bink's Grill</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Rivertown Market</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Woodward Corners</span>
+      </div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="store-logo-item">
+        <span class="store-logo-text">MEIJER</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Detroit Metro Airport</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Detroit Sip</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Elmer's Hamburgers</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Bink's Grill</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Rivertown Market</span>
+      </div>
+      <div class="store-logo-item">
+        <span class="store-logo-text">Woodward Corners</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Press Articles -->
+<div class="press-articles">
+  <h2>Recent Press Coverage</h2>
+  <div class="press-grid">
+    
+    <article class="press-card">
+      <img class="press-card-image" src="https://via.placeholder.com/400x200/FFE4B5/8B4513?text=Detroit+News" alt="Detroit News Article">
+      <div class="press-card-content">
+        <div class="press-card-date">August 6, 2025</div>
+        <h3 class="press-card-title">Retired Detroit Teacher's Grannies Pound Cake Expands to Meijer, DTW</h3>
+        <p class="press-card-excerpt">The Detroit-born brand started as a small-batch storefront and recently expanded to shelves at Meijer stores across Metro Detroit.</p>
+        <a href="https://www.detroitnews.com/story/entertainment/dining/2025/08/06/retired-detroit-teachers-grannies-pound-cake-expands-to-meijer-dtw/85475586007/" class="press-card-link" target="_blank">Read Full Article →</a>
+      </div>
+    </article>
+    
+    <article class="press-card">
+      <img class="press-card-image" src="https://via.placeholder.com/400x200/FFE4B5/8B4513?text=Bridge+Detroit" alt="Bridge Detroit Article">
+      <div class="press-card-content">
+        <div class="press-card-date">December 15, 2024</div>
+        <h3 class="press-card-title">Grannies Pound Cake Opens Brick-and-Mortar in Northwest Detroit</h3>
+        <p class="press-card-excerpt">A grand opening featured cake bowls and new cake flavors hot out of the oven at the new Eight Mile location.</p>
+        <a href="https://www.bridgedetroit.com/grannies-pound-cake-opens-brick-and-mortar-in-northwest-detroit/" class="press-card-link" target="_blank">Read Full Article →</a>
+      </div>
+    </article>
+    
+    <article class="press-card">
+      <img class="press-card-image" src="https://via.placeholder.com/400x200/FFE4B5/8B4513?text=Motor+City+Match" alt="Motor City Match">
+      <div class="press-card-content">
+        <div class="press-card-date">2022</div>
+        <h3 class="press-card-title">Motor City Match Grant Recipient</h3>
+        <p class="press-card-excerpt">Patrice Davis received a technical assistance grant for marketing and branding through the city's Motor City Match program.</p>
+        <a href="#" class="press-card-link">Learn More →</a>
+      </div>
+    </article>
+    
+  </div>
+  
+  <!-- Testimonials -->
+  <div class="testimonials-section">
+    <h2 style="text-align: center; margin-bottom: 40px;">What People Are Saying</h2>
+    <div class="press-grid">
+      <div class="press-card">
+        <div class="press-card-content">
+          <p class="press-card-excerpt" style="font-style: italic;">"The most common feedback we get from customers is that our buttery pound cakes taste just like the ones they had growing up."</p>
+          <p><strong>- Patrice Davis, Founder</strong></p>
+        </div>
+      </div>
+      
+      <div class="press-card">
+        <div class="press-card-content">
+          <p class="press-card-excerpt" style="font-style: italic;">"I'm not a sweet person, but I tasted [the pound cakes] and the rest is history. It reminded me of my mom's cakes - childhood - getting to have a warm piece of cake that my mom was making."</p>
+          <p><strong>- Jevona Fudge Watson, Detroit Sip Owner</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Awards & Recognition -->
+<div class="awards-section">
+  <h2 class="awards-title">Awards & Recognition</h2>
+  <div class="awards-grid">
+    <div class="award-item">
+      <div class="award-icon">🏆</div>
+      <div class="award-title">Motor City Match</div>
+      <div class="award-year">Technical Assistance Grant 2022</div>
+    </div>
+    <div class="award-item">
+      <div class="award-icon">🎖️</div>
+      <div class="award-title">Detroit Small Business</div>
+      <div class="award-year">Success Story 2024</div>
+    </div>
+    <div class="award-item">
+      <div class="award-icon">⭐</div>
+      <div class="award-title">Community Impact</div>
+      <div class="award-year">Brightmoor Artisans Collective</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Enhance marquee on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const marqueeContent = document.querySelector('.stores-marquee-content');
+    if (marqueeContent) {
+      // Adjust animation speed based on content width
+      const contentWidth = marqueeContent.scrollWidth;
+      const duration = contentWidth / 50; // Adjust speed as needed
+      marqueeContent.style.animationDuration = duration + 's';
+    }
+  });
+</script>
