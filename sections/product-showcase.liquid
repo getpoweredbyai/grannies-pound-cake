@@ -1,0 +1,340 @@
+{% liquid
+  assign products_limit = section.settings.products_limit | default: 4
+  assign section_padding = section.settings.section_padding | default: 'normal'
+%}
+
+<style>
+  .product-showcase {
+    padding: {% if section_padding == 'large' %}var(--spacing-3xl) 0{% else %}var(--spacing-2xl) 0{% endif %};
+    background: var(--color-background);
+    overflow: hidden;
+  }
+  
+  .product-showcase__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  
+  .product-showcase__header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .product-showcase__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: var(--font-weight-black);
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-md) 0;
+    letter-spacing: -0.01em;
+  }
+  
+  .product-showcase__subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .product-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .product-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    transform: translateY(0);
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .product-card:nth-child(1) { animation-delay: 0.1s; }
+  .product-card:nth-child(2) { animation-delay: 0.2s; }
+  .product-card:nth-child(3) { animation-delay: 0.3s; }
+  .product-card:nth-child(4) { animation-delay: 0.4s; }
+  
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .product-card__image-container {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-accent-light);
+  }
+  
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .product-card:hover .product-card__image {
+    transform: scale(1.05);
+  }
+  
+  .product-card__badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: var(--color-primary);
+    color: var(--color-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-semibold);
+    z-index: 1;
+  }
+  
+  .product-card__content {
+    padding: var(--spacing-lg);
+  }
+  
+  .product-card__title {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.2;
+  }
+  
+  .product-card__description {
+    color: var(--color-text-light);
+    margin: 0 0 var(--spacing-md) 0;
+    line-height: 1.5;
+  }
+  
+  .product-card__price {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-md) 0;
+  }
+  
+  .product-card__cta {
+    width: 100%;
+    background: var(--color-secondary);
+    color: white;
+    border: none;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .product-card__cta:hover {
+    background: var(--color-secondary-dark);
+    transform: translateY(-1px);
+  }
+  
+  .product-showcase__footer {
+    text-align: center;
+  }
+  
+  .product-showcase__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    transition: all var(--transition-normal);
+  }
+  
+  .product-showcase__view-all:hover {
+    background: var(--color-primary);
+    color: var(--color-text);
+    transform: translateY(-2px);
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .product-showcase__grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+  }
+</style>
+
+<section class="product-showcase" data-section-id="{{ section.id }}">
+  <div class="product-showcase__container">
+    {% if section.settings.title or section.settings.subtitle %}
+      <div class="product-showcase__header">
+        {% if section.settings.title %}
+          <h2 class="product-showcase__title">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="product-showcase__subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <div class="product-showcase__grid">
+      {% if section.settings.collection %}
+        {% for product in section.settings.collection.products limit: products_limit %}
+          <div class="product-card">
+            <div class="product-card__image-container">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 400 | image_tag: 
+                    class: 'product-card__image',
+                    alt: product.featured_image.alt | default: product.title }}
+              {% else %}
+                <div class="product-card__image" style="background: var(--color-accent); display: flex; align-items: center; justify-content: center;">
+                  <span style="color: var(--color-text-muted);">No Image</span>
+                </div>
+              {% endif %}
+              {% if product.compare_at_price > product.price %}
+                <div class="product-card__badge">Sale</div>
+              {% endif %}
+            </div>
+            
+            <div class="product-card__content">
+              <h3 class="product-card__title">{{ product.title }}</h3>
+              {% if product.description %}
+                <p class="product-card__description">{{ product.description | strip_html | truncate: 100 }}</p>
+              {% endif %}
+              <div class="product-card__price">
+                {% if product.compare_at_price > product.price %}
+                  <span style="text-decoration: line-through; color: var(--color-text-muted); margin-right: var(--spacing-xs);">
+                    {{ product.compare_at_price | money }}
+                  </span>
+                {% endif %}
+                {{ product.price | money }}
+              </div>
+              <a href="{{ product.url }}" class="product-card__cta">Shop Now</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% comment %} Demo products if no collection is selected {% endcomment %}
+        {% for i in (1..4) %}
+          <div class="product-card">
+            <div class="product-card__image-container">
+              <div class="product-card__image" style="background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent)); display: flex; align-items: center; justify-content: center;">
+                <span style="color: var(--color-text-muted); font-size: 3rem;">🍰</span>
+              </div>
+              {% if i == 2 %}
+                <div class="product-card__badge">Featured</div>
+              {% endif %}
+            </div>
+            
+            <div class="product-card__content">
+              <h3 class="product-card__title">Classic Pound Cake</h3>
+              <p class="product-card__description">Our signature recipe passed down through generations, made with the finest ingredients.</p>
+              <div class="product-card__price">$24.99</div>
+              <a href="#" class="product-card__cta">Shop Now</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    
+    {% if section.settings.show_view_all and section.settings.view_all_link %}
+      <div class="product-showcase__footer">
+        <a href="{{ section.settings.view_all_link }}" class="product-showcase__view-all">
+          View All Products
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover our most popular cakes and treats, handcrafted with love."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Number of Products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' Button",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "'View All' Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase"
+    }
+  ]
+}
+{% endschema %}

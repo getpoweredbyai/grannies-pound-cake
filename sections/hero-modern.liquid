@@ -1,0 +1,270 @@
+{% liquid
+  assign hero_height = section.settings.hero_height | default: 'full'
+  assign text_alignment = section.settings.text_alignment | default: 'center'
+  assign overlay_opacity = section.settings.overlay_opacity | default: 30
+%}
+
+<style>
+  .hero-modern {
+    position: relative;
+    width: 100%;
+    min-height: {% if hero_height == 'full' %}100vh{% else %}80vh{% endif %};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  }
+  
+  .hero-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(45, 42, 36, {{ overlay_opacity | divided_by: 100.0 }});
+    z-index: 1;
+  }
+  
+  .hero-modern__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  
+  .hero-modern__content {
+    position: relative;
+    z-index: 2;
+    text-align: {{ text_alignment }};
+    color: white;
+    max-width: 1200px;
+    padding: var(--spacing-xl);
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .hero-modern__headline {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: var(--font-weight-black);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--spacing-md) 0;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-modern__subhead {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: var(--font-weight-normal);
+    margin: 0 0 var(--spacing-xl) 0;
+    opacity: 0.9;
+    max-width: 600px;
+    {% if text_alignment == 'center' %}margin-left: auto; margin-right: auto;{% endif %}
+  }
+  
+  .hero-modern__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--color-primary);
+    color: var(--color-text);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    font-size: 1.1rem;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(0);
+  }
+  
+  .hero-modern__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    background: var(--color-primary-dark);
+  }
+  
+  .hero-modern__scroll-hint {
+    position: absolute;
+    bottom: var(--spacing-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    text-align: center;
+    animation: bounce 2s infinite;
+  }
+  
+  .hero-modern__scroll-arrow {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: var(--spacing-xs) auto 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-modern__content {
+      padding: var(--spacing-lg);
+    }
+    
+    .hero-modern__headline {
+      font-size: clamp(2.5rem, 12vw, 5rem);
+    }
+  }
+</style>
+
+<section class="hero-modern" data-section-id="{{ section.id }}">
+  {% if section.settings.background_image %}
+    {{ section.settings.background_image | image_url: width: 1920 | image_tag: 
+        class: 'hero-modern__background',
+        loading: 'eager',
+        alt: section.settings.background_image.alt | default: 'Hero background' }}
+  {% endif %}
+  
+  <div class="hero-modern__content">
+    {% if section.settings.headline %}
+      <h1 class="hero-modern__headline">{{ section.settings.headline }}</h1>
+    {% endif %}
+    
+    {% if section.settings.subheading %}
+      <p class="hero-modern__subhead">{{ section.settings.subheading }}</p>
+    {% endif %}
+    
+    {% if section.settings.cta_text and section.settings.cta_link %}
+      <a href="{{ section.settings.cta_link }}" class="hero-modern__cta">
+        {{ section.settings.cta_text }}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {% endif %}
+  </div>
+  
+  {% if section.settings.show_scroll_hint %}
+    <div class="hero-modern__scroll-hint">
+      <span>Scroll to explore</span>
+      <span class="hero-modern__scroll-arrow"></span>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Modern Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Grannies Pound Cake"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Handcrafted with love, baked to perfection. Experience the taste that's been bringing families together for generations."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Call to Action Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Call to Action Link"
+    },
+    {
+      "type": "select",
+      "id": "hero_height",
+      "label": "Hero Height",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full Screen"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_hint",
+      "label": "Show Scroll Hint",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Modern Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-modern",
+      "settings": {
+        "headline": "Grannies Pound Cake",
+        "subheading": "Handcrafted with love, baked to perfection. Experience the taste that's been bringing families together for generations.",
+        "cta_text": "Shop Now",
+        "cta_link": "/collections/all",
+        "hero_height": "full",
+        "text_alignment": "center",
+        "overlay_opacity": 30,
+        "show_scroll_hint": true
+      }
+    },
+    "products": {
+      "type": "product-showcase",
+      "settings": {
+        "title": "Featured Products",
+        "subtitle": "Discover our most popular cakes and treats, handcrafted with love.",
+        "products_limit": 4,
+        "section_padding": "normal",
+        "show_view_all": true,
+        "view_all_link": "/collections/all"
+      }
+    },
+    "press": {
+      "type": "press-marquee",
+      "settings": {
+        "title": "In the Press & Stores",
+        "subtitle": "See what people are saying and where you can find us",
+        "marquee_speed": 60,
+        "section_padding": "normal"
+      },
+      "blocks": {
+        "press-1": {
+          "type": "press_article",
+          "settings": {
+            "source": "Detroit Free Press",
+            "title": "Local Bakery Takes Detroit by Storm",
+            "excerpt": "Grannies Pound Cake has become a household name in Detroit, with their signature recipes drawing crowds from across the city.",
+            "date": "2024-03-15"
+          }
+        },
+        "press-2": {
+          "type": "press_article",
+          "settings": {
+            "source": "Metro Times",
+            "title": "The Sweet Success Story Behind Grannies",
+            "excerpt": "From family recipe to retail empire, the journey of Grannies Pound Cake showcases Detroit's entrepreneurial spirit.",
+            "date": "2024-02-28"
+          }
+        },
+        "press-3": {
+          "type": "press_article",
+          "settings": {
+            "source": "Food Network",
+            "title": "Award-Winning Pound Cake Recipe",
+            "excerpt": "The secret ingredients and techniques that make Grannies Pound Cake a cut above the rest, featured on national television.",
+            "date": "2024-01-20"
+          }
+        }
+      },
+      "block_order": [
+        "press-1",
+        "press-2", 
+        "press-3"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "products",
+    "press"
+  ]
+}

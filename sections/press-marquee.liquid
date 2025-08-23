@@ -1,0 +1,364 @@
+{% liquid
+  assign marquee_speed = section.settings.marquee_speed | default: 60
+  assign section_padding = section.settings.section_padding | default: 'normal'
+%}
+
+<style>
+  .press-marquee {
+    padding: {% if section_padding == 'large' %}var(--spacing-3xl) 0{% else %}var(--spacing-2xl) 0{% endif %};
+    background: var(--color-background-alt);
+    overflow: hidden;
+  }
+  
+  .press-marquee__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  
+  .press-marquee__header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .press-marquee__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-sm) 0;
+    letter-spacing: -0.01em;
+  }
+  
+  .press-marquee__subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin: 0 0 var(--spacing-xl) 0;
+  }
+  
+  .marquee-container {
+    position: relative;
+    overflow: hidden;
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl) 0;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .marquee-container::before,
+  .marquee-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .marquee-container::before {
+    left: 0;
+    background: linear-gradient(90deg, white 0%, transparent 100%);
+  }
+  
+  .marquee-container::after {
+    right: 0;
+    background: linear-gradient(270deg, white 0%, transparent 100%);
+  }
+  
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    animation: scroll {{ marquee_speed }}s linear infinite;
+    width: max-content;
+  }
+  
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 var(--spacing-xl);
+    opacity: 0.7;
+    transition: opacity var(--transition-normal);
+    flex-shrink: 0;
+  }
+  
+  .marquee-item:hover {
+    opacity: 1;
+  }
+  
+  .marquee-item img {
+    max-height: 60px;
+    max-width: 160px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: filter var(--transition-normal);
+  }
+  
+  .marquee-item:hover img {
+    filter: grayscale(0%);
+  }
+  
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-3xl);
+  }
+  
+  .press-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    transform: translateY(0);
+  }
+  
+  .press-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .press-card__source {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .press-card__title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.3;
+  }
+  
+  .press-card__excerpt {
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin: 0 0 var(--spacing-md) 0;
+  }
+  
+  .press-card__date {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .press-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .marquee-item {
+      margin: 0 var(--spacing-lg);
+    }
+    
+    .marquee-item img {
+      max-height: 50px;
+      max-width: 120px;
+    }
+  }
+</style>
+
+<section class="press-marquee" data-section-id="{{ section.id }}">
+  <div class="press-marquee__container">
+    {% if section.settings.title or section.settings.subtitle %}
+      <div class="press-marquee__header">
+        {% if section.settings.title %}
+          <h2 class="press-marquee__title">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.subtitle %}
+          <p class="press-marquee__subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <div class="marquee-container">
+      <div class="marquee-track">
+        {% comment %} Store logos - duplicated for seamless loop {% endcomment %}
+        {% for i in (1..2) %}
+          <div class="marquee-item">
+            <div style="background: #0066CC; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">MEIJER</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #1E3A8A; color: white; padding: 12px 20px; border-radius: 8px; font-weight: bold;">DETROIT METRO AIRPORT</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #DC2626; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">ELMER'S HAMBURGERS</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #059669; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">DETROIT SIP</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #7C3AED; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">WHOLE FOODS</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #F59E0B; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">KROGER</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #EF4444; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">TARGET</div>
+          </div>
+          <div class="marquee-item">
+            <div style="background: #1F2937; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold;">FRESH THYME</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    {% if section.blocks.size > 0 %}
+      <div class="press-grid">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'press_article' %}
+              <div class="press-card" {{ block.shopify_attributes }}>
+                {% if block.settings.source %}
+                  <div class="press-card__source">{{ block.settings.source }}</div>
+                {% endif %}
+                {% if block.settings.title %}
+                  <h3 class="press-card__title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.excerpt %}
+                  <p class="press-card__excerpt">{{ block.settings.excerpt }}</p>
+                {% endif %}
+                {% if block.settings.date %}
+                  <div class="press-card__date">{{ block.settings.date | date: '%B %d, %Y' }}</div>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% else %}
+      {% comment %} Demo press articles if no blocks are configured {% endcomment %}
+      <div class="press-grid">
+        <div class="press-card">
+          <div class="press-card__source">Detroit Free Press</div>
+          <h3 class="press-card__title">Local Bakery Takes Detroit by Storm</h3>
+          <p class="press-card__excerpt">Grannies Pound Cake has become a household name in Detroit, with their signature recipes drawing crowds from across the city.</p>
+          <div class="press-card__date">March 15, 2024</div>
+        </div>
+        
+        <div class="press-card">
+          <div class="press-card__source">Metro Times</div>
+          <h3 class="press-card__title">The Sweet Success Story Behind Grannies</h3>
+          <p class="press-card__excerpt">From family recipe to retail empire, the journey of Grannies Pound Cake showcases Detroit's entrepreneurial spirit.</p>
+          <div class="press-card__date">February 28, 2024</div>
+        </div>
+        
+        <div class="press-card">
+          <div class="press-card__source">Food Network</div>
+          <h3 class="press-card__title">Award-Winning Pound Cake Recipe</h3>
+          <p class="press-card__excerpt">The secret ingredients and techniques that make Grannies Pound Cake a cut above the rest, featured on national television.</p>
+          <div class="press-card__date">January 20, 2024</div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<div style="text-align: center; margin: var(--spacing-lg) 0; padding: var(--spacing-md); background: var(--color-accent-light); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--color-text-light);">
+  Designed and powered by <strong style="color: var(--color-primary);">UnifiedAI</strong> • <a href="https://get.poweredbyai.com" style="color: var(--color-primary); text-decoration: none;">get.poweredbyai.com</a>
+</div>
+
+{% schema %}
+{
+  "name": "Press & Store Marquee",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "In the Press & Stores"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "See what people are saying and where you can find us"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Marquee Speed (seconds)",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "press_article",
+      "name": "Press Article",
+      "settings": [
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Publication Source",
+          "default": "Detroit Free Press"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Article Title",
+          "default": "Article Title Here"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "Article Excerpt",
+          "default": "Brief description of the article..."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Publication Date (YYYY-MM-DD)",
+          "default": "2024-03-15"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press & Store Marquee",
+      "blocks": [
+        {
+          "type": "press_article"
+        },
+        {
+          "type": "press_article"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
