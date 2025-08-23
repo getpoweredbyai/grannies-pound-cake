@@ -30,6 +30,9 @@
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
+    
+    {%- comment -%} Modern UI Enhancements - UnifiedAI {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'modern-enhancements.css' | asset_url }}">
     {% endif %}
 
     {{ content_for_header }}
